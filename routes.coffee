@@ -17,18 +17,6 @@ routes = (app) ->
                     validate: (user) ->
                          return user.name? && user.location? &&(user.phone1? || user.phone2?)
                 })
-        # req.session.user = null
-        ###
-        users = [{
-            username: "meng"
-            location: "bj"
-            phone1: "15810014801"
-            phone2: ""
-            star: "10"
-        }]
-        ###
-
-        #return res.render "addressbook/list.jade", { title : "addressbook",users: users}
     app.post '/addressbook/update', (req, res) ->
         userObj = req.body
         User.findById(userObj._id, (err, user) ->
