@@ -1,0 +1,22 @@
+{
+  "name": "polaris",
+  "version": "0.0.1",
+  "description": "bootstrap",
+  "main": "app.coffee",
+  "dependencies": {
+    "express": "~4.8.2",
+    "jade": "~1.5.0",
+    "mongoose": "~3.8.14",
+    "body-parser": "~1.6.2",
+    "express-session": "~1.7.4",
+    "moment": "~2.8.1",
+    "underscore": "~1.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "coffee app.coffee"
+  },
+  "author": "polaris",
+  "license": "ISC"
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/python
+import os
+
+black_list = [
+    "app.coffee"
+]
+
+def walk_and_build(dir, topDown=True):
+    for root, dirs, files in os.walk(dir, topDown):
+        for name in files:
+            if name[-7:] == '.coffee' and name not in black_list:
+                print "compiling ", os.path.join(root, name), "..."
+                os.popen("coffee -c " + os.path.join(root, name))
+print "compiling path", os.path.join(os.path.dirname(__file__), '..', 'public')
+walk_and_build(os.path.join(os.path.dirname(__file__), '..', 'public', 'js'))

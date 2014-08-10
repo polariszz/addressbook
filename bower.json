@@ -1,0 +1,24 @@
+{
+  "name": "polaris",
+  "version": "0.0.1",
+  "authors": [
+    "Minglei Zhang <beijixing266@gmail.com>"
+  ],
+  "description": "init",
+  "main": ".bowerrc",
+  "keywords": [
+    "polaris"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0"
+  }
+}

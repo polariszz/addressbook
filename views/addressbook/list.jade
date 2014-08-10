@@ -1,0 +1,72 @@
+extends ../layout
+block head
+  script(src="/js/controllers/listController.js")
+block content
+  h1 Address Book of COE-2007
+  h2 北大工学院2007级通讯录
+
+  table.table.table-striped.table-hover.table-bordered
+    thead
+      tr
+        th
+          p 姓名 name
+        th
+          p 所在地 location
+        th
+          p 公司/学校
+        th
+          p 电话 phone
+        th
+          p 电话2 高富帅专用
+        th
+          p 已膜拜（次）
+        th
+          p 膜拜（按下去)
+    tbody
+      for user in users
+        if validate(user)
+          tr("data-id"=user._id)
+            td
+              p.name= user.name
+            td
+              p.location= user.location
+            td
+              p.company= user.company
+            td
+              p.phone1= user.phone1
+            td
+              p.phone2= user.phone2
+            td.stars
+              p= user.followers.length
+            if user._id == current_user._id
+              td
+                a.btn.btn-danger.edit(action="button") 编辑
+            else
+              td
+                a.btn.btn-success.mobai(action="button") 膜拜
+      tr.recordRow.hide("data-id"=current_user._id)
+        td
+          input(type="text",name="name")
+          br
+          p.name-msg
+        td
+          input(type="text",name="location")
+          br
+          p.location-msg
+        td
+          input(type="text", name="company")
+          br
+          p.company-msg
+        td
+          input(type="text", name="phone1")
+          br
+          p.phone1-msg
+        td
+          input(type="text", name="phone2")
+        td
+          p -
+        td
+          a.btn.btn-danger.imsure(action="button") 确定
+  if !validate(current_user)
+    div(align="left")
+      a.btn.btn-primary.addRecord(action="button") 添加
