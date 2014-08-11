@@ -18,7 +18,6 @@ userSchema = mg.Schema({
 })
 
 userSchema.pre 'save', (next) ->
-    console.log("pre saving")
     self = @
     if self.isNew
         self.meta.createAt = self.meta.updateAt = Date.now()
@@ -32,7 +31,6 @@ userSchema.statics = {
             .sort('meta.createAt')
             .exec(cb)
     findById: (id, cb) ->
-        console.log(id)
         ObjectId = mg.Types.ObjectId
         oId = new ObjectId(id)
         @findOne({_id: oId}).exec(cb)

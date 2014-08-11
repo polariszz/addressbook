@@ -26,12 +26,12 @@ routes = (app) ->
             for field of userObj
                 if field != '_id'
                     user[field] = userObj[field]
-            console.log("2", user)
-            user.save((err) ->
+            user.save((err, user) ->
                 console.log('got here')
                 if err
                     console.log(err)
                     return res.send(JSON.stringify({success: 0, err: err}))
+                req.session.user = user
                 return res.send(JSON.stringify({success: 1}))
             )
         )
@@ -70,10 +70,8 @@ routes = (app) ->
                     'success': 0
                     'err': "Invalid username/password"
                 }))
-            console.log('saving')
             req.session.user = userObj
             return res.send(JSON.stringify({'success': 1}))
         )
-
 
 module.exports = routes
