@@ -88,12 +88,18 @@ routes = (app) ->
                 return error("User dosen't exist")
             _u = req.session.user
             i = user.followers.indexOf(_u._id)
-            if i != -1
-                # should remove
-                user.followers.splice(i, 1)
+            if req.body.toggle
+                if i != -1
+                    # should remove
+                    user.followers.splice(i, 1)
+                else
+                    # should add
+                    user.followers.push(_u._id)
             else
-                # should add
-                user.followers.push(_u._id)
+                if req.body.star and i == -1
+                    user.followers.push(_u._id)
+                if req.body.unstar and i != -1
+                    user.followers.splice(i, 1)
             user.save( (err, user) ->
                 if err
                     return error(err)
