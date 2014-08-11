@@ -14,6 +14,10 @@
         for field in fields
             $("." + field + "-msg").text('')
 
+    String.prototype.removeQuotes = () ->
+        if @[0] == '"' and @[@length-1] == '"'
+            return @substr(1, @length-2)
+
     $("document").ready( ()->
         addBtn = $('.addRecord')
         recordRow = $('.recordRow')
@@ -109,6 +113,39 @@
                         else
                             failureCallback()
                     )
+            )
+        )
+        $('.mobai').click( (event) ->
+            _target = $(event.target)
+            starToggle = (handler) ->
+                starControl = handler.parents('tr').find('.stars')
+                stars = parseInt(starControl.text())
+                if handler.hasClass('starred')
+                    # should remove state of star
+                    handler.text('膜拜')
+                    starControl.text(stars - 1)
+                else
+                    # should add state of star
+                    handler.text('取消')
+                    starControl.text(stars + 1)
+                handler.toggleClass('starred btn-primary btn-success')
+            $.ajax({
+                type: 'POST'
+                url: '/user/star'
+                data: {
+                    _id: _target.parents('tr').attr('data-id').removeQuotes()
+                    toggle: true
+                }
+            }).done( (responseData) ->
+                response = JSON.parse(responseData)
+                unless response.success
+                    # should notify and handle error
+                    console.log('error:', response.err)
+                    return
+                starToggle(_target)
+                console.log('Star btn toggled.')
+
+
             )
         )
     )

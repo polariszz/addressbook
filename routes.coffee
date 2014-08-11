@@ -1,6 +1,7 @@
 User = require("./models/User")
 _ = require("underscore")
 
+
 routes = (app) ->
     app.get '/', (req, res) ->
         return res.render "layout.jade", { title : "polaris" }
@@ -73,5 +74,32 @@ routes = (app) ->
             req.session.user = userObj
             return res.send(JSON.stringify({'success': 1}))
         )
+
+    app.post('/user/star', (req, res) ->
+        error = (msg) ->
+            return res.end(JSON.stringify({success: 0, err, msg}))
+        succeed = () ->
+            return res.end(JSON.stringify({success: 1}))
+
+        User.findById(req.body._id, (err, user) ->
+            if err
+                return error(err)
+            unless user?
+                return error("User dosen't exist")
+            _u = req.session.user
+            i = user.followers.indexOf(_u._id)
+            if i != -1
+                # should remove
+                user.followers.splice(i, 1)
+            else
+                # should add
+                user.followers.push(_u._id)
+            user.save( (err, user) ->
+                if err
+                    return error(err)
+                return succeed()
+            )
+        )
+    )
 
 module.exports = routes

@@ -43,7 +43,10 @@ block content
                 a.btn.btn-danger.edit(action="button") 编辑
             else
               td
-                a.btn.btn-success.mobai(action="button") 膜拜
+                if user.followers.indexOf(current_user._id) == -1
+                  a.btn.btn-success.mobai(action="button") 膜拜
+                else
+                  a.btn.btn-primary.mobai.starred(action="button") 取消
       tr.recordRow.hide("data-id"=current_user._id)
         td
           input(type="text",name="name")
