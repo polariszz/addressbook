@@ -27,18 +27,26 @@ app.use '/', (req, res, next) ->
     console.log(moment().format('HH:mm:ss'), req.path)
     next()
 
+auth_paths = [
+    '/signinup'
+    '/signin'
+    '/signup'
+]
 # auth
 app.use '/', (req, res, next) ->
-    auth_paths = [
-        '/signinup'
-        '/signin'
-        '/signup'
-    ]
     unless req.path in auth_paths or req.session?.user?
         res.redirect('/signinup')
     else
         next()
 
+app.get '/signinup', (req, res, next) ->
+    if req.session?.user?
+        res.redirect('/addressbook')
+    else
+        next()
+
+app.get '/', (req, res, next) ->
+    res.redirect('/addressbook')
 
 routes(app)
 

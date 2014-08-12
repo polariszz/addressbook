@@ -72,6 +72,10 @@ routes = (app) ->
             return res.send(JSON.stringify({'success': 1}))
         )
 
+    app.get '/logout', (req, res) ->
+        req.session.user = null
+        return res.redirect('/singinup')
+
     app.post('/user/star', (req, res) ->
         error = (msg) ->
             return res.end(JSON.stringify({success: 0, err, msg}))

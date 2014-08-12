@@ -4,6 +4,32 @@ html
     include ./includes/head
     block head
   body
+    nav.navbar.navbar-default(role="navigation")
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type="button", data-toggle="collapse", data-target="bs-example-navbar-collapse-1")
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href="/") AddressBook
+        .collapse.navbar-collapse#bs-example-navbar-collapse-1
+          ul.nav.navbar-nav
+            li
+              a.active(href="/addressbook") Home
+          ul.nav.navbar-nav.navbar-right
+            if current_user
+              if current_user.name
+                li
+                  a.my-name= current_user.name
+              else if current_user.username
+                li
+                  a.my-username= current_user.username
+              li
+                a.logout(href="/logout") Log out
+            else
+              li
+                a.logout(href="/signinup") Sign In/Up
+
     .container(align="center")
-      h1 Hello World
       block content
