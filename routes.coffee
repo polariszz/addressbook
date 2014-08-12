@@ -1,7 +1,6 @@
 User = require("./models/User")
 _ = require("underscore")
 
-
 routes = (app) ->
     app.get '/', (req, res) ->
         return res.render "layout.jade", { title : "polaris" }
@@ -41,10 +40,6 @@ routes = (app) ->
         return res.render "auth/signinup.jade", { title : "signinup" }
 
     app.post '/signin', (req, res) ->
-        userObj = {
-            username: req.body.username
-            password: req.body.password
-        }
         User.findByUsername(req.body.username, (err, user) ->
             if err
                 console.log(err)
@@ -52,11 +47,13 @@ routes = (app) ->
             if not user
                 console.log("User not exists")
                 return res.send(JSON.stringify({'success': 0, 'err': "User not exists"}))
-            if user.password != req.body.password
-                console.log("Wrong password")
-                return res.send(JSON.stringify({'success': 0, 'err': "Wrong password"}))
-            req.session.user = user
-            return res.send(JSON.stringify({'success': 1}))
+            user.comparePasswords(req.body.password, (err, match) ->
+                if !match or err
+                    console.log("Wrong password")
+                    return res.send(JSON.stringify({'success': 0, 'err': "Wrong password"}))
+                req.session.user = user
+                return res.end(JSON.stringify({'success': 1}))
+            )
         )
 
     app.post '/signup', (req, res) ->

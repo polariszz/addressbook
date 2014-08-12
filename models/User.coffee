@@ -1,4 +1,7 @@
 mg = require 'mongoose'
+bcrypt = require 'bcrypt'
+# should come from config
+SALT_WORK_FACTOR = 5
 
 userSchema = mg.Schema({
     username: {type:String, unique: true}
@@ -23,8 +26,27 @@ userSchema.pre 'save', (next) ->
         self.meta.createAt = self.meta.updateAt = Date.now()
     else
         self.meta.updateAt = Date.now()
-    next()
+    if not @isModified('password')
+        next()
+    bcrypt.genSalt( SALT_WORK_FACTOR, (err, salt) ->
+        if err
+            return next(err)
+        bcrypt.hash(self.password, salt, (err, hash) ->
+            if err
+                return next(err)
+            self.password = hash
+            next()
+        )
+    )
 
+userSchema.methods = {
+    comparePasswords: (_password, cb) ->
+        bcrypt.compare(_password, @password, (err, match) ->
+            if err
+                return cb(err)
+            cb(err, match)
+        )
+}
 userSchema.statics = {
     fetch: (cb) ->
         @find({})

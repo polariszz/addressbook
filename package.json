@@ -10,7 +10,8 @@
     "body-parser": "~1.6.2",
     "express-session": "~1.7.4",
     "moment": "~2.8.1",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "bcrypt": "~0.8.0"
   },
   "devDependencies": {},
   "scripts": {
