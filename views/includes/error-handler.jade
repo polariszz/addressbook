@@ -1,0 +1,18 @@
+if msgs && typeof(msgs) !== 'undefined'
+  if msgs.error
+    .alert.alert-danger.alert-dismissble(role="alert")
+      button.close(type="button", data-dismiss="alert")
+        span.aria-hidden &times;
+      strong error!&nbsp;
+      =  msgs.error
+  else if msgs.warn
+    .alert.alert-warning.alert-dismissble(role="alert")
+      button.close(type="button", data-dismiss="alert")
+        span.aria-hidden &times;
+      strong warn!&nbsp;
+      =  msgs.warn
+  else if msgs.info
+    .alert.alert-success.alert-dismissble(role="alert")
+      button.close(type="button", data-dismiss="alert")
+        span.aria-hidden &times;
+      p=  msgs.info

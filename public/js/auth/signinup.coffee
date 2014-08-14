@@ -6,7 +6,6 @@
                 url: '/signin'
                 data: userObj
             }).done (responseData) ->
-                # console.log(responseData)
                 callback?(JSON.parse(responseData))
 
         @signup: (userObj, callback) ->

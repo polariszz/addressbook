@@ -7,6 +7,7 @@ routes = require('./routes')
 mongoose = require('mongoose')
 User = require('./models/User')
 flash = require('./tools/flash')
+utils = require('./utils')
 
 app = express()
 port = process.env.PORT or 8080
@@ -41,6 +42,13 @@ app.use '/', (req, res, next) ->
         res.redirect('/signinup')
     else
         next()
+
+# error-handle
+app.use '/', (req, res, next) ->
+    for type in utils.error_msgs_types
+        if req.query[type]
+            req.flash(type, req.query[type])
+    next()
 
 app.get '/signinup', (req, res, next) ->
     if req.session?.user?
