@@ -6,6 +6,7 @@ session = require('express-session')
 routes = require('./routes')
 mongoose = require('mongoose')
 User = require('./models/User')
+flash = require('./tools/flash')
 
 app = express()
 port = process.env.PORT or 8080
@@ -17,6 +18,8 @@ app.use session({
     resave: true,
     saveUninitialized: true
 })
+app.use(flash())
+
 app.use express.static(__dirname + "/public")
 
 mongoose.connect("mongodb://localhost/polaris")
