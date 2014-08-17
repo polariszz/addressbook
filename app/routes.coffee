@@ -1,6 +1,7 @@
 User = require("./models/User")
 _ = require("underscore")
 config = require("./config")
+log = require("./tools/logger")
 
 routes = (app) ->
     app.get '/', (req, res) ->
@@ -9,7 +10,7 @@ routes = (app) ->
     app.get '/addressbook', (req, res) ->
         User.fetch (err, users) ->
             if err
-                console.log(err)
+                log.debug(err)
             else
                 return res.render("addressbook/list.jade", {
                     title: config.appname
@@ -24,7 +25,7 @@ routes = (app) ->
         userObj = req.body
         User.findById(userObj._id, (err, user) ->
             if err
-                console.log(err)
+                log.debug(err)
                 req.flash.error("Failed to update.")
                 return res.send(JSON.stringify({success: 0, err: err}))
             for field of userObj
@@ -32,7 +33,7 @@ routes = (app) ->
                     user[field] = userObj[field]
             user.save((err, user) ->
                 if err
-                    console.log(err)
+                    log.debug(err)
                     req.flash.error("Failed to update.")
                     return res.send(JSON.stringify({success: 0, err: err}))
                 req.session.user = user
@@ -49,7 +50,7 @@ routes = (app) ->
     app.post '/signin', (req, res) ->
         User.findByUsername(req.body.username, (err, user) ->
             if err
-                console.log(err)
+                log.debug(err)
                 return res.send(JSON.stringify({'success': 0, 'err': err}))
             if not user
                 req.flash.warn('User not exists')
@@ -77,7 +78,7 @@ routes = (app) ->
         userObj.save( (err) ->
             if (err)
                 req.flash.error('Username already exists.')
-                console.log(err)
+                log.debug(err)
                 return error()
             req.session.user = userObj
             req.flash.info('Welcome ' + userObj.username)

@@ -7,6 +7,7 @@ routes = require('./routes')
 mongoose = require('mongoose')
 User = require('./models/User')
 flash = require('./tools/flash')
+log = require('./tools/logger')
 utils = require('./utils')
 config = require('./config')
 
@@ -25,10 +26,10 @@ app.use(flash())
 app.use express.static(__dirname + "/public")
 
 mongoose.connect( config.database )
-console.log('mongoose connected to', config.database, 'at', mongoose.connection.port)
+log.info('mongoose connected to' ,config.database ,'at' ,mongoose.connection.port)
 
 app.use '/', (req, res, next) ->
-    console.log(moment().format('HH:mm:ss'), req.path)
+    log.info(moment().format('HH:mm:ss'), req.path)
     next()
 
 auth_paths = [
@@ -61,5 +62,5 @@ app.get '/', (req, res, next) ->
 
 routes(app)
 
-console.log("express started on PORT: ", port)
+log.info("express started on PORT: " ,port)
 app.listen(port)

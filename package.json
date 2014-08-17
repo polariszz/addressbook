@@ -11,12 +11,13 @@
     "express-session": "~1.7.4",
     "moment": "~2.8.1",
     "underscore": "~1.6.0",
-    "bcrypt": "~0.8.0"
+    "bcrypt": "~0.8.0",
+    "winston": "~0.7.3"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "coffee app\/app.coffee"
+    "start": "coffee app/app.coffee"
   },
   "author": "polaris",
   "license": "ISC"
