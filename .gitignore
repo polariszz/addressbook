@@ -2,3 +2,4 @@ node_modules
 public/libs
 *.js
 npm-debug.log
+data/*

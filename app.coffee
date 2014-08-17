@@ -8,6 +8,7 @@ mongoose = require('mongoose')
 User = require('./models/User')
 flash = require('./tools/flash')
 utils = require('./utils')
+config = require('./config')
 
 app = express()
 port = process.env.PORT or 8080
@@ -23,9 +24,8 @@ app.use(flash())
 
 app.use express.static(__dirname + "/public")
 
-mongoose.connect("mongodb://localhost/polaris")
-console.log(mongoose.connection.host)
-console.log(mongoose.connection.port)
+mongoose.connect( config.database )
+console.log('mongoose connected to', config.database, 'at', mongoose.connection.port)
 
 app.use '/', (req, res, next) ->
     console.log(moment().format('HH:mm:ss'), req.path)

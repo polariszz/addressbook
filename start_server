@@ -1,3 +1,31 @@
 #!/bin/bash
+
+NODE_ENV=development
+error()
+{
+    echo "enviroment $1 not supported."
+    echo "type start_server help to learn more."
+    exit 0
+}
+help()
+{
+    cat<<EOF
+start_server prod : start production enviroment
+start_server dev(default): start development enviroment
+EOF
+    exit 0
+
+}
+if [ $# -gt 0 ]; then
+    case $1 in
+        prod) NODE_ENV=production ;; #set env ot prod
+        dev) NODE_ENV=development;; #set env to dev
+        help) help;;
+        *) error $1;;
+    esac
+fi
+echo "setting NODE_ENV to $NODE_ENV..."
+export NODE_ENV
 bin/build
+bin/start_mongo
 npm start

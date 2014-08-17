@@ -1,0 +1,24 @@
+#!/usr/bin/python
+import os
+
+bin_path = os.path.dirname(__file__)
+db_path = os.path.join(bin_path, "..", "data")
+log_path = os.path.join(db_path, "log")
+mongo_bin = os.path.join(bin_path, "mongod")
+mongodb_lock = "mongod.lock"
+silence = " >/dev/null 2>&1"
+
+try:
+    pid = file(os.path.join(db_path, mongodb_lock)).read().strip()
+    print("killing existing mongodb ... pid: " + pid)
+    os.popen('kill ' + pid + silence)
+except:
+    print("mongodb instance not existed, ready to start.")
+
+try:
+    os.popen(mongo_bin + ' --fork --logpath ' + os.path.join(log_path, 'mongod.log') + \
+             ' --dbpath ' + db_path)
+    pid = file(os.path.join(db_path, mongodb_lock)).read().strip()
+    print("mongodb started. pid: " + pid)
+except:
+    print("failed to start mongodb")

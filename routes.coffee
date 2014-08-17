@@ -1,5 +1,6 @@
 User = require("./models/User")
 _ = require("underscore")
+config = require("./config")
 
 routes = (app) ->
     app.get '/', (req, res) ->
@@ -11,7 +12,7 @@ routes = (app) ->
                 console.log(err)
             else
                 return res.render("addressbook/list.jade", {
-                    title: "addressbook"
+                    title: config.appname
                     users: users
                     "current_user": req.session.user
                     validate: (user) ->

@@ -20,8 +20,5 @@ Install And Run
 
 **Run**
 
-*  start mongodb: `mongod` or start it in background:
-
-     `mongod --fork --logpath /var/log/mongod.log`
 *  go to root directory of AddressBook
 *  `./start_server`
