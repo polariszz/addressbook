@@ -8,6 +8,7 @@ mongo_bin = os.path.join(bin_path, "mongod")
 mongodb_lock = "mongod.lock"
 silence = " >/dev/null 2>&1"
 
+os.popen('mkdir -p ' + log_path)
 try:
     pid = file(os.path.join(db_path, mongodb_lock)).read().strip()
     print("killing existing mongodb ... pid: " + pid)
