@@ -7,9 +7,9 @@ routes = require('./routes')
 mongoose = require('mongoose')
 User = require('./models/User')
 flash = require('./tools/flash')
-log = require('./tools/logger')
 utils = require('./utils')
 config = require('./config')
+log = new (require('./tools/logger'))('app')
 
 app = express()
 port = process.env.PORT or 8080
@@ -29,7 +29,7 @@ mongoose.connect( config.database )
 log.info('mongoose connected to' ,config.database ,'at' ,mongoose.connection.port)
 
 app.use '/', (req, res, next) ->
-    log.info(moment().format('HH:mm:ss'), req.path)
+    log.info(req.path)
     next()
 
 auth_paths = [

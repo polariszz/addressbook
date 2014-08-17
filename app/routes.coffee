@@ -1,7 +1,7 @@
 User = require("./models/User")
 _ = require("underscore")
 config = require("./config")
-log = require("./tools/logger")
+log = new (require("./tools/logger"))('routes')
 
 routes = (app) ->
     app.get '/', (req, res) ->
@@ -60,6 +60,7 @@ routes = (app) ->
                     req.flash.warn("Wrong password")
                     return res.send(JSON.stringify({'success': 0}))
                 req.session.user = user
+                log.debug(user.username, 'logged in')
                 return res.end(JSON.stringify({'success': 1}))
             )
         )
@@ -81,11 +82,13 @@ routes = (app) ->
                 log.debug(err)
                 return error()
             req.session.user = userObj
+            log.debug(userObj.username, 'signed up')
             req.flash.info('Welcome ' + userObj.username)
             return res.send(JSON.stringify({'success': 1}))
         )
 
     app.get '/logout', (req, res) ->
+        log.debug(req.session.user.username, 'logged out')
         req.session.user = null
         req.flash.info('Successfully logged out!')
         return res.redirect('/singinup')
