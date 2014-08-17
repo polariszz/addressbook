@@ -16,7 +16,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "coffee app.coffee"
+    "start": "coffee app\/app.coffee"
   },
   "author": "polaris",
   "license": "ISC"

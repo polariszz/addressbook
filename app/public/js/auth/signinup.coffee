@@ -39,7 +39,7 @@
                 if response.success
                     location.href = '/addressbook'
                 else
-                    location.href = '/signinup?err=' + response.err
+                    location.href = '/signinup'
             )
         )
 

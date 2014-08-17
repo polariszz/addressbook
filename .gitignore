@@ -1,5 +1,5 @@
 node_modules
-public/libs
+app/public/libs
 *.js
 npm-debug.log
 data/*
