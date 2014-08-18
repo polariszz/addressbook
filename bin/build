@@ -12,4 +12,4 @@ def walk_and_build(dir, topDown=True):
                 print "compiling ", os.path.join(root, name), "..."
                 os.popen("coffee -c " + os.path.join(root, name))
 print "compiling path", os.path.join(os.path.dirname(__file__), '..', 'app', 'public', 'js')
-walk_and_build(os.path.join(os.path.dirname(__file__), '..', 'public', 'app', 'js'))
+walk_and_build(os.path.join(os.path.dirname(__file__), '..', 'app', 'public', 'js'))
