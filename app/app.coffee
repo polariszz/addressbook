@@ -29,7 +29,7 @@ mongoose.connect( config.database )
 log.info('mongoose connected to' ,config.database ,'at' ,mongoose.connection.port)
 
 app.use '/', (req, res, next) ->
-    log.info(req.path)
+    log.info(req.ip, req.path)
     next()
 
 auth_paths = [

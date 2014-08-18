@@ -25,7 +25,7 @@ class Log
     log: (level, msgs) ->
         if levels[level] < levels[log_level]
             return
-        now = moment().format(moment.isoFomat)
+        now = moment().format('YYYY-MM-DD HH:mm:ss')
         if level.length < 5
             space = ' '
         else
